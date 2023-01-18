@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import ProductList from "./ProductList";
+
 
 function Products(){
     const [product,setProduct] = useState([])
     useEffect(()=>{
-        console.log("Product list..",ProductList)
+        // console.log("Product list..",ProductList)
         // console.log(product)
-        setProduct(ProductList);
+        fetch('https://star-spark-pasta.glitch.me/api/products')
+        .then(response => response.json())
+        .then(data =>{
+          console.log(data)
+          setProduct(data);
+        })
+        
     },[])
     return(
-        <div className="container mx-auto ">
+        <div className="md:mx-16 ">
             <h1 className="text-lg font-bold my-8">Products</h1>
             <div className="grid grid-cols-5 gap-20 my-6">
               {

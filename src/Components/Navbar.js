@@ -6,7 +6,7 @@ function Navbar() {
                 <img src='/images/logo.png' alt="logo" />
             </Link>
             <ul className="flex space-x-5 items-center">
-                <li><Link to="/about">About</Link></li>
+                <li><Link to="/">Home</Link></li>
                 <li><Link to="/products">Products</Link></li>
                 <li>
                     <Link to="/cart">
