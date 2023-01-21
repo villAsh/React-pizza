@@ -1,12 +1,33 @@
 import { Link } from "react-router-dom";
-import React, { memo } from "react";
-
+import { useContext, useState } from "react";
+import { CartContext } from "../CartContext";
 function ProductCard(props) {
     const { name, size, price, image, _id } = props.product;
+    const {cart,setCart} = useContext(CartContext);
+    const [added,setAdded] = useState(false);
 
     const AddToCart = (e, product) =>{
         e.preventDefault();
-        console.log(product)
+        let _cart = {...cart};
+        if(!_cart.items){
+            _cart.items = {};
+        }
+        if(_cart.items[product._id]){
+            _cart.items[product._id] += 1;
+        }else{
+            _cart.items[product._id] = 1;
+        }
+
+        if(!_cart.totalItems){
+            _cart.totalItems = 0
+        }
+        _cart.totalItems += 1;
+        setCart(_cart);
+        setAdded(true);
+
+        setTimeout(() => {
+            setAdded(false);
+        },1000);
     }
     return (
         <Link to={`product/${_id}`}>
@@ -18,7 +39,7 @@ function ProductCard(props) {
                 </div>
                 <div className="flex flex-row justify-between font-bold mt-3">
                     <h1 className="text-lg">&#8377; {price}</h1>
-                    <button onClick={(e) => AddToCart(e, props.product)} className="bg-yellow-400 hover:bg-yellow-500 px-4 py-1 rounded-full">ADD</button>
+                    <button disabled={added}  onClick={(e) => AddToCart(e, props.product)} className={`${added ? 'bg-green-400' : 'bg-yellow-400'} px-4 py-1 rounded-full`}>{added ? 'ADDED' : 'ADD'}</button>
                 </div>
             </div>
         </Link>
@@ -26,4 +47,4 @@ function ProductCard(props) {
     )
 }
 
-export default  memo(ProductCard);
+export default  ProductCard;

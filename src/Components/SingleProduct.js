@@ -33,7 +33,6 @@ function SingleProduct(){
             _cart.totalItems = 0;
         }
         _cart.totalItems += 1;
-
         setCart(_cart);
 
     }

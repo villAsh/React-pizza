@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useSearchParams } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
@@ -13,6 +13,8 @@ function App() {
 
   useEffect(() => {
     const cart = window.localStorage.getItem('cart');
+    // console.log(JSON.parse(cart));
+    setCart(JSON.parse(cart));
   }, [])
 
   useEffect(()=>{
