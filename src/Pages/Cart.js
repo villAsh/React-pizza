@@ -55,6 +55,26 @@ function Cart() {
         total += sum;
         return sum;
     }
+    const Delete = (productId) => {
+        const _cart = {...cart};
+        const qty = _cart.items[productId];
+        delete _cart.items[productId];
+
+        _cart.totalItems -= qty;
+
+        setCart(_cart);
+
+        const UpdatedProducts = products.filter((product) => {
+            return product._id !== productId;
+        });
+        setProducts(UpdatedProducts);
+    }
+
+    const handlePlaced = () =>{
+        window.alert("Order placed Successfully.....");
+        setProducts([]);
+        setCart({});
+    }
     return (
         <div className="container mx-auto w-full lg:w-1/2 pb-20">
             <h1 className="my-12 font-bold">Cart Items</h1>
@@ -72,7 +92,7 @@ function Cart() {
                                 <button  onClick={() => Add(product._id)} className="bg-yellow-400 px-4 py-2 rounded-full leading-none font-bold "> + </button>
                             </div>
                             <span className="font-bold">  &#8377; { getSum(product._id, product.price)}</span>
-                            <button className="bg-red-500 px-4 py-2 rounded-full leading-none text-white font-bold">DELETE</button>
+                            <button onClick={() => {Delete(product._id)}}  className="bg-red-500 px-4 py-2 rounded-full leading-none text-white font-bold">DELETE</button>
                         </div>
                     </li>
                     );
@@ -85,7 +105,7 @@ function Cart() {
                 <b>Grand Total  : &#8377;</b>{total}
             </div>
             <div className="font-bold text-right mt-5">
-                <button className="bg-yellow-500 px-4 py-2 rounded-full leading-none">Place Order</button>
+                <button onClick={handlePlaced}  className="bg-yellow-500 px-4 py-2 rounded-full leading-none">Place Order</button>
             </div>
         </div>
     )
